@@ -472,9 +472,69 @@ function amoCRMScript($paramsTask) {
 </pre>
 
 
+## Вспомогательные функции
 
+Теперь давайте рассмотрим дополнительные функции, которые я выписал для себя, но думаю они вам тоже могут пригодиться.
 
+### Узнать допустимые поля для «Сделки»
 
+<pre>
+function returnFieldsContact() {
+
+	$access_token = 'xxxxxx';
+
+	$headers = [
+		"Accept: application/json",
+		'Authorization: Bearer ' . $access_token
+	];
+
+	$link='https://test.amocrm.ru/api/v4/leads/custom_fields';
+
+	$curl = curl_init(); //Сохраняем дескриптор сеанса cURL
+	curl_setopt($curl,CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($curl,CURLOPT_USERAGENT,'amoCRM-oAuth-client/1.0');
+	curl_setopt($curl,CURLOPT_URL, $link);
+	curl_setopt($curl,CURLOPT_HTTPHEADER, $headers);
+	curl_setopt($curl,CURLOPT_HEADER, false);
+	curl_setopt($curl,CURLOPT_SSL_VERIFYPEER, 1);
+	curl_setopt($curl,CURLOPT_SSL_VERIFYHOST, 2);
+	$out=curl_exec($curl); 
+	$code=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+	curl_close($curl);
+	$Response=json_decode($out,true);
+	$account=$Response['response']['account'];
+}
+</pre>
+
+### Узнать допустимые поля для «Контакты»
+
+<pre>
+function returnFieldsContact() {
+
+	$access_token = 'xxxxxx';
+
+	$headers = [
+		"Accept: application/json",
+		'Authorization: Bearer ' . $access_token
+	];
+
+	$link='https://test.amocrm.ru/api/v4/contacts/custom_fields';
+
+	$curl = curl_init(); //Сохраняем дескриптор сеанса cURL
+	curl_setopt($curl,CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($curl,CURLOPT_USERAGENT,'amoCRM-oAuth-client/1.0');
+	curl_setopt($curl,CURLOPT_URL, $link);
+	curl_setopt($curl,CURLOPT_HTTPHEADER, $headers);
+	curl_setopt($curl,CURLOPT_HEADER, false);
+	curl_setopt($curl,CURLOPT_SSL_VERIFYPEER, 1);
+	curl_setopt($curl,CURLOPT_SSL_VERIFYHOST, 2);
+	$out=curl_exec($curl); 
+	$code=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+	curl_close($curl);
+	$Response=json_decode($out,true);
+	$account=$Response['response']['account'];
+}
+</pre>
 
 
 
